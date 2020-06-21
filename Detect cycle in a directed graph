@@ -1,0 +1,22 @@
+class DetectCycle {
+    public static boolean dfs(ArrayList<ArrayList<Integer>> adj, int V, int[] visited, int curr) {
+        if(visited[curr] == 1) return false;
+        if(visited[curr] == 2) return true;
+        visited[curr] = 1;
+        ArrayList<Integer> arr = adj.get(curr);
+        for(int j = 0; j < arr.size(); j++) {
+            if(!dfs(adj, V, visited, arr.get(j))) return false;
+        }
+        visited[curr] = 2;
+        return true;
+    }
+    static boolean isCyclic(ArrayList<ArrayList<Integer>> adj, int V) {
+        int[] visited = new int[V];
+        for(int i = 0; i < V; i++) {
+            if(visited[i] == 0) {
+                if(!dfs(adj, V, visited, i)) return true;
+            }
+        }
+        return false;
+    }
+}
